@@ -1,3 +1,13 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Nasalization";
+  src: url("/fonts/Nasalization Rg.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #0f0f0f;
   --text: #ffffff;
@@ -7,10 +17,34 @@
 .light {
   --bg: #ffffff;
   --text: #0f0f0f;
-  --accent: #1d4ed8; /* bleu foncé */
+  --accent: #4e525b; /* bleu foncé */
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+
+}
+
+section[id] {
+  scroll-margin-top: 90px;
 }
 
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 85% 50%, rgba(239, 68, 68, 0.08), transparent 35%),
+    linear-gradient(
+      90deg,
+      #0F0F0F 0%,
+      #202020 45%,
+      #383838 75%,
+      #4D4C4C 100%
+    );
+
   color: var(--text);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Nasalization", sans-serif;
 }
