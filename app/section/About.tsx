@@ -1,11 +1,11 @@
 /* eslint-disable */
-"use client";
+'use client';
 
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { useRef, useContext } from "react";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import { LangContext } from "../layout";
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { useRef, useContext } from 'react';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { LangContext } from '../layout';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,19 +18,22 @@ export default function About() {
 
   const { aboutParagraphs, qualities } = ctx.data;
 
-  useGSAP(() => {
-    gsap.from(".about-item", {
-      y: -60,
-      opacity: 0,
-      duration: 0.9,
-      stagger: 0.2,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: scope.current,
-        start: "top 80%",
-      },
-    });
-  }, { scope });
+  useGSAP(
+    () => {
+      gsap.from('.about-item', {
+        y: -60,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: scope.current,
+          start: 'top 80%',
+        },
+      });
+    },
+    { scope }
+  );
 
   return (
     <section
@@ -39,50 +42,49 @@ export default function About() {
       className="about"
       aria-labelledby="about-heading"
       style={{
-        minHeight: "100vh",
-        padding: "5rem 1rem 4rem",
-        background: "transparent",
-        color: "#f8fafc",
-        display: "flex",
-        alignItems: "center",
+        minHeight: '100vh',
+        padding: '5rem 1rem 4rem',
+        background: 'transparent',
+        color: '#f8fafc',
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <div className="w-full flex flex-col items-center text-center">
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        <div className="flex w-full flex-col items-center text-center">
           <p
             className="about-item"
             style={{
-              color: "#f87171",
-              textTransform: "uppercase",
-              letterSpacing: "0.3em",
-              fontSize: "0.8rem",
-              marginBottom: "0.75rem",
+              color: '#f87171',
+              textTransform: 'uppercase',
+              letterSpacing: '0.3em',
+              fontSize: '0.8rem',
+              marginBottom: '0.75rem',
             }}
           >
-            {ctx.lang === "fr" ? "À propos" : "About"}
+            {ctx.lang === 'fr' ? 'À propos' : 'About'}
           </p>
 
           <h2
             className="about-item"
             id="about-heading"
             style={{
-              fontSize: "2.2rem",
+              fontSize: '2.2rem',
               fontWeight: 700,
-              marginBottom: "1rem",
-              maxWidth: "800px",
+              marginBottom: '1rem',
+              maxWidth: '800px',
             }}
           >
-            {ctx.lang === "fr"
-              ? "Développeur web orienté produit et expérience"
-              : "Product-oriented web developer focused on user experience"}
+            {ctx.lang === 'fr'
+              ? 'Développeur web orienté produit et expérience'
+              : 'Product-oriented web developer focused on user experience'}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start mt-8">
-
+        <div className="mt-8 grid grid-cols-1 items-start gap-10 md:grid-cols-2">
           {/* LEFT */}
           <div className="flex justify-center md:justify-start">
-            <p className="about-item text-slate-300 text-[1.05rem] leading-8 max-w-xl text-center md:text-left">
+            <p className="about-item max-w-xl text-center text-[1.05rem] leading-8 text-slate-300 md:text-left">
               {aboutParagraphs.map((text, i) => (
                 <span key={i}>
                   {text}
@@ -104,10 +106,10 @@ export default function About() {
                 key={i}
                 className="about-item"
                 style={{
-                  color: "#ffffff",
-                  background: "rgba(10, 10, 10, 0.6)",
-                  border: "1px solid rgba(248, 113, 113, 0.35)",
-                  padding: "0.95rem 1rem",
+                  color: '#ffffff',
+                  background: 'rgba(10, 10, 10, 0.6)',
+                  border: '1px solid rgba(248, 113, 113, 0.35)',
+                  padding: '0.95rem 1rem',
                   borderRadius: 14,
                 }}
               >
@@ -115,7 +117,6 @@ export default function About() {
               </div>
             ))}
           </div>
-
         </div>
       </div>
     </section>

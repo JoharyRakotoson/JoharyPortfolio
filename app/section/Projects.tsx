@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-"use client";
+'use client';
 
-import { useEffect, useRef, useContext } from "react";
-import { gsap } from "gsap";
+import { useEffect, useRef, useContext } from 'react';
+import { gsap } from 'gsap';
 
-import ProjectCard from "../components/ProjectCard";
-import { LangContext } from "../layout";
+import ProjectCard from '../components/ProjectCard';
+import { LangContext } from '../layout';
 
 export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,7 +31,7 @@ export default function Projects() {
         x: -250,
         opacity: 0,
         duration: 1.2,
-        ease: "power2.inOut",
+        ease: 'power2.inOut',
         onComplete: () => {
           gsap.set(first, { x: 0, opacity: 1 });
 
@@ -49,7 +49,7 @@ export default function Projects() {
               opacity: 1,
               scale: 1,
               duration: 1.5,
-              ease: "power3.out",
+              ease: 'power3.out',
             }
           );
         },
@@ -61,28 +61,27 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" style={{ padding: "2rem 1rem", overflow: "hidden" }}>
-      
+    <section id="projects" style={{ padding: '2rem 1rem', overflow: 'hidden' }}>
       {/* TITLE */}
-      <h2 style={{ textAlign: "center", fontSize: "2.2rem" }}>
-        {lang === "fr" ? "Projets réalisés" : "Featured projects"}
+      <h2 style={{ textAlign: 'center', fontSize: '2.2rem' }}>
+        {lang === 'fr' ? 'Projets réalisés' : 'Featured projects'}
       </h2>
 
       {/* CAROUSEL */}
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          overflow: "visible",
-          minHeight: "440px",
+          display: 'flex',
+          justifyContent: 'center',
+          overflow: 'visible',
+          minHeight: '440px',
         }}
       >
         <div
           ref={containerRef}
           style={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "center",
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
           }}
         >
           {projects.map((project) => (
