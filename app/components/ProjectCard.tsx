@@ -9,36 +9,31 @@ type ProjectCardProps = {
 export default function ProjectCard({ title, tag, description, index, total }: ProjectCardProps) {
   return (
     <div
+      className="flex h-[320px] w-[180px] flex-shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-white/20 bg-gradient-to-br from-gray-900 to-red-500 p-4 text-white shadow-[0_16px_36px_rgba(0,0,0,0.28)] sm:h-[360px] sm:w-[210px] sm:p-5 md:h-[400px] md:w-[230px] md:p-6"
       style={{
-        width: "230px",
-        height: "400px",
-        marginLeft: index === 0 ? "0" : "2px",
-        marginTop: index === 0 || index === total - 1 ? "100px" : index === 1 || index === total - 2 ? "60px" : "20px",
-        marginBottom: index === 0 || index === total - 1 ? "0px" : "0px",
-        borderRadius: "24px",
-        padding: "1.2rem",
-        color: "#fff",
-        background: "linear-gradient(135deg, #111827 0%, #ef4444 100%)",
-        boxShadow: "0 16px 36px rgba(0,0,0,0.28)",
+        marginTop:
+          index === 0 || index === total - 1
+            ? '100px'
+            : index === 1 || index === total - 2
+              ? '60px'
+              : '20px',
+
         transform: `rotate(${index < 2 ? -8 : index < 4 ? -3 : index < 6 ? 3 : 8}deg)`,
-        border: "1px solid rgba(255,255,255,0.2)",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        flexShrink: 0,
-        position: "relative",
-        transformOrigin: "top center",
+
+        transformOrigin: 'top center',
         zIndex: total - index,
       }}
     >
-      <div style={{ fontSize: "0.75rem", letterSpacing: "0.2em", opacity: 0.8 }}>
-        {tag}
-      </div>
+      {/* TAG */}
+      <div className="text-xs tracking-[0.2em] opacity-80 sm:text-sm">{tag}</div>
+
+      {/* CONTENT */}
       <div>
-        <div style={{ fontSize: "1rem", fontWeight: 700 }}>{title}</div>
-        <div style={{ marginTop: "0.35rem", fontSize: "0.8rem", opacity: 0.9 }}>
-          {description ?? "Projet visible & moderne"}
-        </div>
+        <h3 className="text-base font-bold break-words sm:text-lg md:text-xl">{title}</h3>
+
+        <p className="mt-2 text-xs leading-relaxed break-words opacity-90 sm:text-sm md:text-base">
+          {description ?? 'Projet visible & moderne'}
+        </p>
       </div>
     </div>
   );

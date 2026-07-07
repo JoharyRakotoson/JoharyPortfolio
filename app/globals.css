@@ -1,8 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @font-face {
-  font-family: "Nasalization";
-  src: url("/fonts/Nasalization Rg.otf") format("opentype");
+  font-family: 'Nasalization';
+  src: url('/fonts/Nasalization Rg.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -23,7 +23,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
-
+  background: #0f0f0f;
 }
 
 section[id] {
@@ -33,18 +33,17 @@ section[id] {
 body {
   background:
     radial-gradient(circle at 85% 50%, rgba(239, 68, 68, 0.08), transparent 35%),
-    linear-gradient(
-      90deg,
-      #0F0F0F 0%,
-      #202020 45%,
-      #383838 75%,
-      #4D4C4C 100%
-    );
+    linear-gradient(90deg, #0f0f0f 0%, #202020 45%, #383838 75%, #4d4c4c 100%);
 
   color: var(--text);
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Nasalization", sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Nasalization', sans-serif;
 }

@@ -24,8 +24,7 @@ export default function Icon({
     },
 
     contact: {
-      container:
-        'min-w-[3rem] h-12 rounded-2xl bg-red-500 grid place-items-center',
+      container: 'min-w-[3rem] h-12 rounded-2xl bg-red-500 grid place-items-center',
       icon: 'text-white',
       size: size ?? 24,
     },
@@ -42,11 +41,7 @@ export default function Icon({
 
   return (
     <div className={clsx(current.container, className)}>
-      <IconComponent
-        size={current.size}
-        strokeWidth={2.2}
-        className={current.icon}
-      />
+      <IconComponent size={current.size} strokeWidth={2.2} className={current.icon} />
     </div>
   );
 }

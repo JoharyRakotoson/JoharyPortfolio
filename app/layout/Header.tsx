@@ -7,11 +7,12 @@ import { LangContext } from '../layout';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const ctx = useContext(LangContext);
 
   const navItems = ctx?.data.navItems ?? [];
-  const lang = ctx?.lang ?? "fr";
+  const lang = ctx?.lang ?? 'fr';
   const setLang = ctx?.setLang;
 
   useEffect(() => {
@@ -20,64 +21,111 @@ export default function Header() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-black-950/50 backdrop-blur-md' : 'bg-transparent'
-      }`}
-    >
-      <nav className="flex items-center justify-between px-8 py-5 text-white">
-        
-        {/* LOGO */}
-        <div className="flex items-center gap-3">
-          <a href="#home" className="flex items-center gap-3">
+    <>
+      {/* HEADER */}
+      <header
+        className={`fixed top-0 left-0 z-100 w-full transition-all duration-300 ${
+          isScrolled ? 'bg-black/60 backdrop-blur-md' : 'bg-transparent'
+        } `}
+      >
+        <nav className="flex items-center justify-between px-4 py-4 text-white sm:px-6 md:px-8">
+          {/* LOGO */}
+          <a href="#home" className="flex items-center gap-2 md:gap-3">
             <img
               src="/logo/mylogo.png"
               alt="Logo"
-              className="w-10 h-10 object-contain"
+              className="h-7 w-7 object-contain md:h-10 md:w-10"
             />
 
-            <span className="font-inter text-2xl leading-none">
-              Johary
-            </span>
+            <span className="font-inter text-base md:text-2xl">Johary</span>
           </a>
-        </div>
 
-        {/* NAV */}
-        <ul className="hidden md:flex gap-8 text-sm font-medium">
-          {navItems.map((item) => (
-            <li key={item.href} className="hover:text-gray-300 cursor-pointer">
-              <a href={item.href}>{item.label}</a>
-            </li>
-          ))}
-        </ul>
+          {/* DESKTOP NAV */}
+          <ul className="hidden gap-6 text-sm font-medium md:flex lg:gap-8">
+            {navItems.map((item) => (
+              <li key={item.href} className="transition hover:text-gray-300">
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
 
-        {/* RIGHT SIDE */}
-        <div className="flex items-center gap-4">
+          {/* RIGHT SIDE */}
+          <div className="flex items-center gap-3 md:gap-4">
+            {/* LANGUAGE */}
+            <button
+              type="button"
+              onClick={() => setLang?.(lang === 'fr' ? 'en' : 'fr')}
+              className="mr-10 text-xs font-medium transition hover:text-gray-300 md:mr-0 md:text-sm"
+            >
+              {lang.toUpperCase()}
+            </button>
 
-          {/* SWITCH LANG */}
-          <button
-            onClick={() => setLang?.(lang === "fr" ? "en" : "fr")}
-            className="text-sm font-medium hover:text-gray-300 transition"
+            {/* CONTACT DESKTOP */}
+            <div className="hidden md:block">
+              <Button href="#contact" variant="outline" className="rounded-full text-sm">
+                Contact
+              </Button>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      {/* MOBILE BUTTON */}
+      <button
+        type="button"
+        className="fixed top-4 right-4 z-2000 flex h-8 w-8 items-center justify-center md:hidden"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        {menuOpen ? (
+          <>
+            {/* CLOSE X */}
+            <span className="absolute h-0.5 w-6 rotate-45 bg-white" />
+
+            <span className="absolute h-0.5 w-6 -rotate-45 bg-white" />
+          </>
+        ) : (
+          <>
+            {/* HAMBURGER */}
+            <span className="h-0.5 w-6 bg-white"></span>
+            <span className="h-0.5 w-6 bg-white"></span>
+            <span className="h-0.5 w-6 bg-white"></span>
+          </>
+        )}
+      </button>
+
+      {/* MOBILE MENU OVERLAY */}
+      <div
+        className={`fixed inset-0 z-900 flex h-screen w-screen flex-col items-center justify-start gap-6 bg-black/95 pt-32 text-center backdrop-blur-xl transition-all duration-300 md:hidden ${
+          menuOpen ? 'visible opacity-100' : 'pointer-events-none invisible opacity-0'
+        } `}
+      >
+        {navItems.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            onClick={() => setMenuOpen(false)}
+            className="text-2xl text-white transition hover:text-gray-300"
           >
-            {lang.toUpperCase()}
-          </button>
+            {item.label}
+          </a>
+        ))}
 
-          {/* CONTACT */}
-          <Button
-            href="#contact"
-            variant="outline"
-            className="rounded-full text-sm"
-          >
-            Contact
-          </Button>
-
-        </div>
-
-      </nav>
-    </header>
+        <Button
+          href="#contact"
+          variant="outline"
+          className="mt-6 rounded-full text-sm"
+          onClick={() => setMenuOpen(false)}
+        >
+          Contact
+        </Button>
+      </div>
+    </>
   );
 }

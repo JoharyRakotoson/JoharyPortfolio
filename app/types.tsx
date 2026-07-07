@@ -1,4 +1,4 @@
-import type { NavItem } from "./data";
+import type { NavItem } from './data';
 
 type SkillItem = {
   name: string;

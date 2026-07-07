@@ -1,25 +1,27 @@
 export default function Footer() {
   return (
-    <footer className="w-full bg-transparent text-white py-8 mt-16 border-t border-white/10">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-
+    <footer className="mt-16 w-full border-t border-white/10 bg-transparent py-8 text-white">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
         {/* LEFT */}
         <div className="text-sm text-gray-300">
-          © {new Date().getFullYear()} MyPortfolio. All rights reserved.
+          © {new Date().getFullYear()} JoharyPortfolio. All rights reserved.
         </div>
 
         {/* CENTER */}
         <div className="flex gap-6 text-sm">
-          <a href="#about" className="hover:text-white transition">About</a>
-          <a href="#skills" className="hover:text-white transition">Skills</a>
-          <a href="#projects" className="hover:text-white transition">Projects</a>
+          <a href="#about" className="transition hover:text-white">
+            About
+          </a>
+          <a href="#skills" className="transition hover:text-white">
+            Skills
+          </a>
+          <a href="#projects" className="transition hover:text-white">
+            Projects
+          </a>
         </div>
 
         {/* RIGHT */}
-        <div className="text-sm text-gray-400">
-          Built with React 
-        </div>
-
+        <div className="text-sm text-gray-400">Built with React</div>
       </div>
     </footer>
   );
