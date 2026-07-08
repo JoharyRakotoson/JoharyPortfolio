@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../components/Button';
 import FormField from '../components/FormField';
 import Icon from '../components/Icon';
@@ -10,11 +10,48 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Contact() {
   const ctx = useContext(LangContext);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
 
   if (!ctx) return null;
 
   const { socialLink } = ctx.data;
   const { lang } = ctx;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formElement = e.currentTarget;
+    const form = new FormData(formElement);
+
+    const data = {
+      name: form.get("name"),
+      email: form.get("email"),
+      subject: form.get("subject"),
+      message: form.get("message"),
+    };
+
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      alert("Message envoyé !");
+      formElement.reset();
+    } else {
+      alert("Erreur lors de l'envoi");
+    }
+  };
+
+
 
   return (
     <section
@@ -122,15 +159,28 @@ export default function Contact() {
                 {lang === 'fr' ? 'Collaborons ensemble' : 'Let’s work together'}
               </h3>
 
-              <form className="w-full space-y-6">
-                <FormField label="Name" name="name" type="text" placeholder="Votre nom" />
-                <FormField label="Email" name="email" type="email" placeholder="you@example.com" />
+              <form onSubmit={handleSubmit} className="w-full space-y-6">
+                <FormField
+                  label="Name"
+                  name="name"
+                  type="text"
+                  placeholder="Votre nom"
+                />
+
+                <FormField
+                  label="Email"
+                  name="email"
+                  type="email"
+                  placeholder="email@gmail.com"
+                />
+
                 <FormField
                   label="Subject"
                   name="subject"
                   type="text"
                   placeholder="Sujet du message"
                 />
+
                 <FormField
                   label="Message"
                   name="message"
@@ -140,11 +190,12 @@ export default function Contact() {
                 />
 
                 <Button type="submit" variant="primary" className="w-full">
-                  {lang === 'fr' ? 'Envoyer' : 'Send'}
+                  {lang === "fr" ? "Envoyer" : "Send"}
                 </Button>
               </form>
             </div>
           </div>
+
         </div>
       </div>
     </section>
