@@ -1,6 +1,10 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
+if (!process.env.RESEND_API_KEY) {
+  throw new Error("RESEND_API_KEY manquante");
+}
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
