@@ -21,25 +21,43 @@ export default function Contact() {
     const form = new FormData(formElement);
 
     const data = {
-      name: form.get("name"),
-      email: form.get("email"),
-      subject: form.get("subject"),
-      message: form.get("message"),
+      name: form.get("name")?.toString(),
+      email: form.get("email")?.toString(),
+      subject: form.get("subject")?.toString(),
+      message: form.get("message")?.toString(),
     };
 
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    if (!data.name || !data.email || !data.subject || !data.message) {
+      alert("Veuillez remplir tous les champs.");
+      return;
+    }
 
-    if (response.ok) {
-      alert("Message envoyé !");
-      formElement.reset();
-    } else {
-      alert("Erreur lors de l'envoi");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert("Message envoyé !");
+        formElement.reset();
+      } else {
+        console.error("Erreur API :", result);
+
+        alert(
+          result.message || "Erreur lors de l'envoi du message."
+        );
+      }
+
+    } catch (error) {
+      console.error("Erreur fetch :", error);
+
+      alert("Impossible de contacter le serveur.");
     }
   };
 
