@@ -5,18 +5,10 @@ import Button from '../components/Button';
 import FormField from '../components/FormField';
 import Icon from '../components/Icon';
 import { LangContext } from '../layout';
-
 import { Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Contact() {
   const ctx = useContext(LangContext);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
   if (!ctx) return null;
 
   const { socialLink } = ctx.data;
