@@ -1,30 +1,33 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-if (!process.env.RESEND_API_KEY) {
-  throw new Error("RESEND_API_KEY manquante");
-}
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const apiKey = process.env.RESEND_API_KEY;
 
-    const {
-      name,
-      email,
-      subject,
-      message,
-    } = body;
+    if (!apiKey) {
+      return NextResponse.json(
+        { success: false, message: "RESEND_API_KEY manquante." },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(apiKey);
+
+    const { name, email, subject, message } = await req.json();
+
+    if (!name || !email || !subject || !message) {
+      return NextResponse.json(
+        { success: false, message: "Tous les champs sont obligatoires." },
+        { status: 400 }
+      );
+    }
 
     const { data, error } = await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
-      to: ["johariniainarakotoson40@gmail.com"],
-      subject: subject,
-
+      to: "johariniainarakotoson40@gmail.com",
       replyTo: email,
-
+      subject,
       html: `
         <h2>Nouveau message depuis ton portfolio</h2>
 
@@ -32,7 +35,7 @@ export async function POST(req: Request) {
         <p><strong>Email :</strong> ${email}</p>
         <p><strong>Sujet :</strong> ${subject}</p>
 
-        <br/>
+        <hr />
 
         <p><strong>Message :</strong></p>
         <p>${message}</p>
@@ -40,11 +43,16 @@ export async function POST(req: Request) {
     });
 
     if (error) {
-      console.error(error);
+      console.error("Resend error:", error);
 
       return NextResponse.json(
-        { error: "Erreur Resend" },
-        { status: 500 }
+        {
+          success: false,
+          message: error.message,
+        },
+        {
+          status: 500,
+        }
       );
     }
 
@@ -52,15 +60,13 @@ export async function POST(req: Request) {
       success: true,
       data,
     });
-
   } catch (error) {
-
-    console.error(error);
+    console.error("Server error:", error);
 
     return NextResponse.json(
       {
         success: false,
-        message: "Erreur serveur",
+        message: "Erreur interne du serveur.",
       },
       {
         status: 500,
