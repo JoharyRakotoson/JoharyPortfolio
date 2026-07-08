@@ -1,5 +1,5 @@
-import { Resend } from "resend";
-import { NextResponse } from "next/server";
+import { Resend } from 'resend';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
     if (!apiKey) {
       return NextResponse.json(
-        { success: false, message: "RESEND_API_KEY manquante." },
+        { success: false, message: 'RESEND_API_KEY manquante.' },
         { status: 500 }
       );
     }
@@ -18,14 +18,14 @@ export async function POST(req: Request) {
 
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
-        { success: false, message: "Tous les champs sont obligatoires." },
+        { success: false, message: 'Tous les champs sont obligatoires.' },
         { status: 400 }
       );
     }
 
     const { data, error } = await resend.emails.send({
-      from: "Portfolio <onboarding@resend.dev>",
-      to: "johariniainarakotoson40@gmail.com",
+      from: 'Portfolio <onboarding@resend.dev>',
+      to: 'johariniainarakotoson40@gmail.com',
       replyTo: email,
       subject,
       html: `
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
     });
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error('Resend error:', error);
 
       return NextResponse.json(
         {
@@ -61,12 +61,12 @@ export async function POST(req: Request) {
       data,
     });
   } catch (error) {
-    console.error("Server error:", error);
+    console.error('Server error:', error);
 
     return NextResponse.json(
       {
         success: false,
-        message: "Erreur interne du serveur.",
+        message: 'Erreur interne du serveur.',
       },
       {
         status: 500,

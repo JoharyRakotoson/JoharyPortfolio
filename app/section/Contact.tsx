@@ -21,22 +21,22 @@ export default function Contact() {
     const form = new FormData(formElement);
 
     const data = {
-      name: form.get("name")?.toString(),
-      email: form.get("email")?.toString(),
-      subject: form.get("subject")?.toString(),
-      message: form.get("message")?.toString(),
+      name: form.get('name')?.toString(),
+      email: form.get('email')?.toString(),
+      subject: form.get('subject')?.toString(),
+      message: form.get('message')?.toString(),
     };
 
     if (!data.name || !data.email || !data.subject || !data.message) {
-      alert("Veuillez remplir tous les champs.");
+      alert('Veuillez remplir tous les champs.');
       return;
     }
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
+      const response = await fetch('/api/contact', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
@@ -44,24 +44,19 @@ export default function Contact() {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        alert("Message envoyé !");
+        alert('Message envoyé !');
         formElement.reset();
       } else {
-        console.error("Erreur API :", result);
+        console.error('Erreur API :', result);
 
-        alert(
-          result.message || "Erreur lors de l'envoi du message."
-        );
+        alert(result.message || "Erreur lors de l'envoi du message.");
       }
-
     } catch (error) {
-      console.error("Erreur fetch :", error);
+      console.error('Erreur fetch :', error);
 
-      alert("Impossible de contacter le serveur.");
+      alert('Impossible de contacter le serveur.');
     }
   };
-
-
 
   return (
     <section
@@ -170,19 +165,9 @@ export default function Contact() {
               </h3>
 
               <form onSubmit={handleSubmit} className="w-full space-y-6">
-                <FormField
-                  label="Name"
-                  name="name"
-                  type="text"
-                  placeholder="Votre nom"
-                />
+                <FormField label="Name" name="name" type="text" placeholder="Votre nom" />
 
-                <FormField
-                  label="Email"
-                  name="email"
-                  type="email"
-                  placeholder="email@gmail.com"
-                />
+                <FormField label="Email" name="email" type="email" placeholder="email@gmail.com" />
 
                 <FormField
                   label="Subject"
@@ -200,12 +185,11 @@ export default function Contact() {
                 />
 
                 <Button type="submit" variant="primary" className="w-full">
-                  {lang === "fr" ? "Envoyer" : "Send"}
+                  {lang === 'fr' ? 'Envoyer' : 'Send'}
                 </Button>
               </form>
             </div>
           </div>
-
         </div>
       </div>
     </section>
