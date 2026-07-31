@@ -96,7 +96,7 @@ export default function Home() {
       <div className={`hero-image absolute top-[45%] left-1/2 ${Z_PORTRAIT} -translate-x-1/2 -translate-y-1/2 sm:top-1/2`}>
         <div className="w-40 sm:w-52 md:w-80 lg:w-[520px]">
           <Image
-            src="/images/johary3.png"
+            src="/images/johary3.webp"
             alt="profile"
             width={520}
             height={520}
