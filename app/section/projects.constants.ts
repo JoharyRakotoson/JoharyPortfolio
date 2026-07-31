@@ -1,0 +1,11 @@
+export const FAN_SPREAD = 50;
+export const FAN_RADIUS_RATIO = 0.55;
+export const SIDE_STRETCH = 1.3;
+export const CARD_HEIGHT = 430;
+export const PLACE_CARDS = true;
+export const Y_OFFSET = 380;
+export const EXIT_DURATION = 0.7;
+export const MOVE_DURATION = 0.6;
+export const STEP = 0.32;
+export const CYCLE_DELAY = 1.2;
+export const EXIT_OFFSET = 320;

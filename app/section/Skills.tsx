@@ -1,4 +1,3 @@
-/* eslint-disable */
 'use client';
 
 import Image from 'next/image';
@@ -12,14 +11,11 @@ import { LangContext } from '../layout';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Skills() {
-  const scope = useRef<HTMLDivElement>(null);
+  const scope = useRef<HTMLElement>(null);
 
   const ctx = useContext(LangContext);
-
-  if (!ctx) return null;
-
-  const { skills } = ctx.data;
-  const { lang } = ctx;
+  const skills = ctx?.data.skills ?? [];
+  const skillsSection = ctx?.data.skillsSection;
 
   useGSAP(
     () => {
@@ -76,50 +72,26 @@ export default function Skills() {
       ref={scope}
       id="skills"
       aria-labelledby="skills-heading"
-      style={{
-        minHeight: '100vh',
-        padding: '5rem 1rem 4rem',
-        background: 'transparent',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-      }}
+      className="flex min-h-screen flex-col justify-center px-4 pt-20 pb-16"
     >
       {/* TITLE */}
-      <p
-        style={{
-          color: '#f87171',
-          textTransform: 'uppercase',
-          letterSpacing: '0.3em',
-          fontSize: '0.8rem',
-          marginBottom: '0.75rem',
-          textAlign: 'center',
-        }}
-      >
-        {lang === 'fr' ? 'Compétences' : 'Skills'}
+      <p className="mb-3 text-center text-[0.8rem] tracking-[0.3em] text-[#f87171] uppercase">
+        {skillsSection?.eyebrow ?? ''}
       </p>
 
-      <h2
-        id="skills-heading"
-        style={{
-          fontSize: '2.2rem',
-          fontWeight: 700,
-          marginBottom: '1.5rem',
-          textAlign: 'center',
-        }}
-      >
-        {lang === 'fr' ? 'Technologies maîtrisées' : 'Technologies I work with'}
+      <h2 id="skills-heading" className="mb-6 text-center text-[2.2rem] font-bold">
+        {skillsSection?.title ?? ''}
       </h2>
 
       {/* GRID */}
-      <div className="mx-auto grid max-w-4xl grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-4xl grid-cols-2 gap-4 lg:grid-cols-4">
         {skills.map((stack) => (
           <Card
             key={stack.name}
             className="skill-card text-center"
             title={stack.name}
             image={
-              <div className="mx-auto h-14 w-14 rounded-2xl bg-transparent p-3">
+              <div className="mx-auto h-14 w-14 rounded-2xl p-3">
                 <Image
                   src={stack.image}
                   alt={`${stack.name} logo`}

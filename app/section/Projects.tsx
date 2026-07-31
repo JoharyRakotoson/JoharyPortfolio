@@ -1,101 +1,28 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import { useEffect, useRef, useContext } from 'react';
-import { gsap } from 'gsap';
+import { useContext, useMemo, useState } from 'react';
 
-import ProjectCard from '../components/ProjectCard';
+import ProjectCarousel from './ProjectCarousel';
+import ProjectModal from '../components/ProjectModal';
 import { LangContext } from '../layout';
+import type { ProjectItem } from '../data/index';
 
 export default function Projects() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const ctx = useContext(LangContext);
+  const projects = useMemo(() => ctx?.data?.projects ?? [], [ctx]);
+  const lang = ctx?.lang ?? 'fr';
 
-  if (!ctx) return null;
-
-  const { projects } = ctx.data;
-  const { lang } = ctx;
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const move = () => {
-      const cards = container.children;
-      if (cards.length === 0) return;
-
-      const first = cards[0] as HTMLElement;
-
-      gsap.to(first, {
-        x: -250,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power2.inOut',
-        onComplete: () => {
-          gsap.set(first, { x: 0, opacity: 1 });
-
-          container.appendChild(first);
-
-          gsap.fromTo(
-            first,
-            {
-              x: 80,
-              opacity: 0,
-              scale: 0.95,
-            },
-            {
-              x: 0,
-              opacity: 1,
-              scale: 1,
-              duration: 1.5,
-              ease: 'power3.out',
-            }
-          );
-        },
-      });
-    };
-
-    const interval = setInterval(move, 2000);
-    return () => clearInterval(interval);
-  }, []);
+  const [selected, setSelected] = useState<ProjectItem | null>(null);
 
   return (
     <section id="projects" style={{ padding: '2rem 1rem', overflow: 'hidden' }}>
-      {/* TITLE */}
-      <h2 style={{ textAlign: 'center', fontSize: '2.2rem' }}>
+      <h2 style={{ textAlign: 'center', fontSize: '2.2rem', marginBottom: '2rem' }}>
         {lang === 'fr' ? 'Projets réalisés' : 'Featured projects'}
       </h2>
 
-      {/* CAROUSEL */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          overflow: 'visible',
-          minHeight: '440px',
-        }}
-      >
-        <div
-          ref={containerRef}
-          style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'center',
-          }}
-        >
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.title}
-              title={project.title}
-              tag={project.tag}
-              description={project.description}
-              index={0}
-              total={projects.length}
-            />
-          ))}
-        </div>
-      </div>
+      <ProjectCarousel projects={projects} onSelect={setSelected} />
+
+      <ProjectModal project={selected} lang={lang} onClose={() => setSelected(null)} />
     </section>
   );
 }
