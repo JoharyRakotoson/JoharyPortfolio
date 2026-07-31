@@ -35,11 +35,11 @@ export default function ProjectModal({ project, lang, onClose }: ProjectModalPro
     <div className="animate-modal-fade fixed inset-0 z-[1500] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="animate-modal-pop relative flex max-h-[calc(100vh-2rem)] w-full max-w-6xl flex-col overflow-hidden rounded-3xl border border-white/15 bg-[#171717] text-white shadow-[0_24px_60px_rgba(0,0,0,0.6)] md:flex-row">
+      <div className="animate-modal-pop relative flex max-h-[calc(100vh-2rem)] w-full max-w-6xl flex-col overflow-y-auto rounded-3xl border border-white/15 bg-[#171717] text-white shadow-[0_24px_60px_rgba(0,0,0,0.6)] md:flex-row md:overflow-hidden">
         <ModalHeader project={project} />
 
         {/* RIGHT CONTENT */}
-        <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden">
+        <div className="relative flex min-w-0 flex-1 flex-col md:overflow-hidden">
           <button
             type="button"
             onClick={onClose}

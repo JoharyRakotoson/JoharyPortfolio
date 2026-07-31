@@ -2,18 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import {
-  FAN_SPREAD,
-  FAN_RADIUS_RATIO,
-  SIDE_STRETCH,
-  CARD_HEIGHT,
-  Y_OFFSET,
-  EXIT_DURATION,
-  MOVE_DURATION,
-  STEP,
-  CYCLE_DELAY,
-  EXIT_OFFSET,
-} from './projects.constants';
+import { getCarouselConfig } from './projects.constants';
 
 export function useProjectCarousel(projects: readonly unknown[]) {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -25,23 +14,43 @@ export function useProjectCarousel(projects: readonly unknown[]) {
     if (!stage || !cardsContainer || cardsContainer.children.length === 0) return;
 
     const count = projects.length;
-    const halfSpan = (FAN_SPREAD * Math.PI) / 180;
     const slotPositions: { x: number; y: number }[] = [];
     const slotCards = Array.from(cardsContainer.children) as HTMLElement[];
     let tl: gsap.core.Timeline | null = null;
 
     const computeSlots = () => {
-      const W = stage.offsetWidth;
-      const R = W * FAN_RADIUS_RATIO;
-      stage.style.height = `${R + CARD_HEIGHT - Y_OFFSET}px`;
+      const cfg = getCarouselConfig(stage.offsetWidth);
+      const R = Math.max(stage.offsetWidth * cfg.fanRadiusRatio, cfg.minRadius);
+      const halfSpan = (cfg.fanSpread * Math.PI) / 180;
+
+      if (cfg.mode === 'pile') {
+        const topGap = 70;
+        stage.style.height = `${cfg.cardHeight + topGap * 2}px`;
+        for (let i = 0; i < count; i++) {
+          slotPositions[i] = { x: 0, y: -topGap };
+        }
+        return;
+      }
+
+      const yOffset =
+        cfg.edgeGap !== undefined ? R * Math.cos(halfSpan) - cfg.edgeGap : cfg.yOffset;
+
+      stage.style.height = `${R + cfg.cardHeight - yOffset}px`;
+
       for (let i = 0; i < count; i++) {
         const t = count > 1 ? i / (count - 1) : 0.5;
         const angle = Math.PI / 2 + (0.5 - t) * 2 * halfSpan;
         slotPositions[i] = {
-          x: R * Math.cos(angle) * SIDE_STRETCH,
-          y: -R * Math.sin(angle) + Y_OFFSET,
+          x: R * Math.cos(angle) * cfg.sideStretch,
+          y: -R * Math.sin(angle) + yOffset,
         };
       }
+    };
+
+    const syncZIndexes = () => {
+      slotCards.forEach((card, k) => {
+        gsap.set(card, { zIndex: count - k });
+      });
     };
 
     const snapCards = () => {
@@ -52,9 +61,11 @@ export function useProjectCarousel(projects: readonly unknown[]) {
           x: slotPositions[k].x,
           y: slotPositions[k].y,
           opacity: 1,
+          scale: 1,
           transformOrigin: '50% 100%',
         });
       });
+      syncZIndexes();
     };
 
     const startCycle = () => {
@@ -63,17 +74,49 @@ export function useProjectCarousel(projects: readonly unknown[]) {
         tl = null;
       }
 
+      const cfg = getCarouselConfig(stage.offsetWidth);
       const leaving = slotCards[0];
 
-      tl = gsap.timeline({ delay: CYCLE_DELAY, onComplete: startCycle });
+      if (cfg.mode === 'pile') {
+        tl = gsap.timeline({ delay: cfg.cycleDelay, onComplete: startCycle });
+
+        tl.to(
+          leaving,
+          {
+            y: slotPositions[0].y + 90,
+            scale: 0.92,
+            opacity: 0,
+            duration: cfg.exitDuration,
+            ease: 'power2.inOut',
+          },
+          0
+        );
+
+        tl.add(() => {
+          const first = slotCards.shift();
+          if (first) slotCards.push(first);
+          slotCards.forEach((card, k) => {
+            gsap.set(card, { zIndex: count - k });
+          });
+          gsap.set(leaving, {
+            x: slotPositions[count - 1].x,
+            y: slotPositions[count - 1].y,
+            scale: 1,
+            opacity: 1,
+          });
+        });
+        return;
+      }
+
+      tl = gsap.timeline({ delay: cfg.cycleDelay, onComplete: startCycle });
 
       tl.to(
         leaving,
         {
-          x: slotPositions[0].x - EXIT_OFFSET,
+          x: slotPositions[0].x - cfg.exitOffset,
           y: slotPositions[0].y + 40,
           opacity: 0,
-          duration: EXIT_DURATION,
+          duration: cfg.exitDuration,
           ease: 'power2.in',
         },
         0
@@ -85,18 +128,18 @@ export function useProjectCarousel(projects: readonly unknown[]) {
           {
             x: slotPositions[k - 1].x,
             y: slotPositions[k - 1].y,
-            duration: MOVE_DURATION,
+            duration: cfg.moveDuration,
             ease: 'power2.inOut',
           },
-          STEP * k
+          cfg.step * k
         );
       }
 
-      const tIn = STEP * (count - 1) + MOVE_DURATION + 0.15;
+      const tIn = cfg.step * (count - 1) + cfg.moveDuration + 0.15;
       tl.set(
         leaving,
         {
-          x: slotPositions[count - 1].x + EXIT_OFFSET,
+          x: slotPositions[count - 1].x + cfg.exitOffset,
           y: slotPositions[count - 1].y,
           opacity: 1,
         },
@@ -104,7 +147,7 @@ export function useProjectCarousel(projects: readonly unknown[]) {
       );
       tl.to(
         leaving,
-        { x: slotPositions[count - 1].x, duration: MOVE_DURATION + 0.1, ease: 'power2.out' },
+        { x: slotPositions[count - 1].x, duration: cfg.moveDuration + 0.1, ease: 'power2.out' },
         tIn + 0.05
       );
 

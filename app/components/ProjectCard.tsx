@@ -27,7 +27,7 @@ export default function ProjectCard({
         }
       }}
       className="cursor-pointer rounded-3xl bg-gradient-to-br from-[#ef4444] via-white/25 to-transparent p-[2px] shadow-[0_16px_36px_rgba(0,0,0,0.28)] transition-shadow duration-300 hover:shadow-[0_16px_36px_rgba(239,68,68,0.4)]">
-      <div className="group relative h-[320px] w-[180px] flex-shrink-0 overflow-hidden rounded-[calc(1.5rem-2px)] bg-gray-900 text-white sm:h-[360px] sm:w-[210px] md:h-[400px] md:w-[230px]">
+      <div className="group relative h-[350px] w-[200px] flex-shrink-0 overflow-hidden rounded-[calc(1.5rem-2px)] bg-gray-900 text-white sm:h-[360px] sm:w-[210px] md:h-[400px] md:w-[230px]">
         {/* IMAGE */}
         <Image
           src={image}
