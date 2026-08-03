@@ -2,6 +2,8 @@
 
 import { useContext } from 'react';
 import { LangContext } from '../layout';
+import BlurText from '../components/effects/BlurText';
+import FadeUp from '../components/effects/FadeUp';
 
 export default function Education() {
   const ctx = useContext(LangContext);
@@ -18,15 +20,20 @@ export default function Education() {
     >
       <div className="w-full max-w-4xl">
         {/* TITLE */}
-        <h2 className="mb-16 text-center text-4xl font-bold text-white">
-          {lang === 'fr' ? 'Éducation' : 'Education'}
-        </h2>
+        <BlurText
+          as="h2"
+          text={lang === 'fr' ? 'Éducation' : 'Education'}
+          className="mb-16 text-center text-4xl font-bold text-white"
+          stepDuration={0.5}
+        />
 
         {/* TIMELINE */}
         <div className="space-y-8">
           {educationData.map((item, index) => (
-            <div
+            <FadeUp
+              as="div"
               key={index}
+              delay={index * 0.12}
               className="relative flex flex-col gap-4 md:flex-row md:items-start md:gap-8"
             >
               {/* DATE */}
@@ -53,7 +60,7 @@ export default function Education() {
 
                 <p className="mt-2 text-sm text-gray-400 italic">{item.institution}</p>
               </div>
-            </div>
+            </FadeUp>
           ))}
         </div>
       </div>

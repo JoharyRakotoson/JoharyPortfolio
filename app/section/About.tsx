@@ -6,6 +6,7 @@ import { useGSAP } from '@gsap/react';
 import { useRef, useContext } from 'react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { LangContext } from '../layout';
+import VariableProximity from '../components/effects/VariableProximity';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,19 +85,12 @@ export default function About() {
         <div className="mt-8 grid grid-cols-1 items-start gap-10 md:grid-cols-2">
           {/* LEFT */}
           <div className="flex justify-center md:justify-start">
-            <p className="about-item max-w-xl text-center text-[1.05rem] leading-8 text-slate-300 md:text-left">
-              {aboutParagraphs.map((text, i) => (
-                <span key={i}>
-                  {text}
-                  {i !== aboutParagraphs.length - 1 && (
-                    <>
-                      <br />
-                      <br />
-                    </>
-                  )}
-                </span>
-              ))}
-            </p>
+            <VariableProximity
+              className="about-item max-w-xl text-center text-[1.05rem] leading-8 text-slate-300 md:text-left"
+              label={aboutParagraphs.join('\n\n')}
+              baseColor="#cbd5e1"
+              activeColor="#ef4444"
+            />
           </div>
 
           {/* RIGHT */}
@@ -104,16 +98,14 @@ export default function About() {
             {qualities.map((quality, i) => (
               <div
                 key={i}
-                className="about-item"
-                style={{
-                  color: '#ffffff',
-                  background: 'rgba(10, 10, 10, 0.6)',
-                  border: '1px solid rgba(248, 113, 113, 0.35)',
-                  padding: '0.95rem 1rem',
-                  borderRadius: 14,
+                className="about-item quality-item"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                  e.currentTarget.style.setProperty('--y', `${e.clientY - rect.top}px`);
                 }}
               >
-                {quality}
+                <span className="quality-text">{quality}</span>
               </div>
             ))}
           </div>

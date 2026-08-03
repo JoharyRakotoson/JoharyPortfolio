@@ -2,6 +2,8 @@
 
 import { useContext } from 'react';
 import { LangContext } from '../layout';
+import SplitText from '../components/effects/SplitText';
+import FadeUp from '../components/effects/FadeUp';
 
 export default function Experience() {
   const ctx = useContext(LangContext);
@@ -23,16 +25,23 @@ export default function Experience() {
             {lang === 'fr' ? 'Expérience' : 'Experience'}
           </p>
 
-          <h2 className="mt-3 text-4xl font-bold">
-            {lang === 'fr' ? 'Mon parcours professionnel' : 'My professional journey'}
-          </h2>
+          <SplitText
+            tag="h2"
+            text={lang === 'fr' ? 'Mon parcours professionnel' : 'My professional journey'}
+            className="mt-3 text-4xl font-bold"
+            splitType="lines"
+            delay={0.08}
+            textAlign="center"
+          />
         </div>
 
         {/* CONTENT */}
         <div className="space-y-6">
           {experiences.map((item, index) => (
-            <div
+            <FadeUp
+              as="div"
               key={item.role}
+              delay={index * 0.08}
               className="rounded-3xl border border-gray-800/60 bg-transparent p-8 shadow-none"
             >
               <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
@@ -60,7 +69,7 @@ export default function Experience() {
               {index < experiences.length - 1 && (
                 <div className="mt-6 h-px w-full bg-gradient-to-r from-red-500/0 via-red-500/60 to-red-500/0" />
               )}
-            </div>
+            </FadeUp>
           ))}
         </div>
       </div>
