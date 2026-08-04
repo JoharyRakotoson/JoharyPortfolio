@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { LangContext } from '../layout';
 import SplitText from '../components/effects/SplitText';
 import FadeUp from '../components/effects/FadeUp';
+import AnimatedUnderline from '../components/effects/AnimatedUnderline';
 
 export default function Experience() {
   const ctx = useContext(LangContext);
@@ -66,9 +67,7 @@ export default function Experience() {
                 </div>
               </div>
 
-              {index < experiences.length - 1 && (
-                <div className="mt-6 h-px w-full bg-gradient-to-r from-red-500/0 via-red-500/60 to-red-500/0" />
-              )}
+              {index < experiences.length - 1 && <AnimatedUnderline delay={index * 0.08} />}
             </FadeUp>
           ))}
         </div>

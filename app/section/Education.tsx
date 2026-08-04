@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { LangContext } from '../layout';
 import BlurText from '../components/effects/BlurText';
 import FadeUp from '../components/effects/FadeUp';
+import AnimatedTimelineLine from '../components/effects/AnimatedTimelineLine';
 
 export default function Education() {
   const ctx = useContext(LangContext);
@@ -48,17 +49,32 @@ export default function Education() {
                 <div className="z-10 h-4 w-4 shrink-0 rounded-full border-4 border-gray-900 bg-red-500 shadow-lg"></div>
 
                 {index !== educationData.length - 1 && (
-                  <div className="mt-2 hidden h-24 w-1 bg-gradient-to-b from-red-500 to-red-600 md:block" />
+                  <AnimatedTimelineLine className="mt-2 hidden md:block" />
                 )}
               </div>
 
               {/* CONTENT */}
               <div className="w-full pl-0 md:w-2/3 md:pl-6">
-                <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                <BlurText
+                  as="h3"
+                  text={item.title}
+                  className="text-xl font-bold text-white"
+                  stepDuration={0.6}
+                />
 
-                <p className="mt-1 text-red-400">{item.description}</p>
+                <BlurText
+                  as="p"
+                  text={item.description}
+                  className="mt-1 text-red-400"
+                  stepDuration={0.6}
+                />
 
-                <p className="mt-2 text-sm text-gray-400 italic">{item.institution}</p>
+                <BlurText
+                  as="p"
+                  text={item.institution}
+                  className="mt-2 text-sm text-gray-400 italic"
+                  stepDuration={0.6}
+                />
               </div>
             </FadeUp>
           ))}

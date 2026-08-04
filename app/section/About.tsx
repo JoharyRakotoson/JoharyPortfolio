@@ -12,12 +12,26 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
   const scope = useRef<HTMLDivElement>(null);
+  const hoverRaf = useRef(0);
 
   const ctx = useContext(LangContext);
 
   if (!ctx) return null;
 
   const { aboutParagraphs, qualities } = ctx.data;
+
+  const handleHoverMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (hoverRaf.current) return;
+    const el = e.currentTarget;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    hoverRaf.current = requestAnimationFrame(() => {
+      hoverRaf.current = 0;
+      const rect = el.getBoundingClientRect();
+      el.style.setProperty('--x', `${clientX - rect.left}px`);
+      el.style.setProperty('--y', `${clientY - rect.top}px`);
+    });
+  };
 
   useGSAP(
     () => {
@@ -27,6 +41,19 @@ export default function About() {
         duration: 0.9,
         stagger: 0.2,
         ease: 'power3.out',
+        scrollTrigger: {
+          trigger: scope.current,
+          start: 'top 80%',
+        },
+      });
+
+      gsap.from('.about-proximity-line', {
+        y: 24,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity',
         scrollTrigger: {
           trigger: scope.current,
           start: 'top 80%',
@@ -85,12 +112,15 @@ export default function About() {
         <div className="mt-8 grid grid-cols-1 items-start gap-10 md:grid-cols-2">
           {/* LEFT */}
           <div className="flex justify-center md:justify-start">
-            <VariableProximity
-              className="about-item max-w-xl text-center text-[1.05rem] leading-8 text-slate-300 md:text-left"
-              label={aboutParagraphs.join('\n\n')}
-              baseColor="#cbd5e1"
-              activeColor="#ef4444"
-            />
+            <div className="about-proximity-wrap" onMouseMove={handleHoverMove}>
+              <VariableProximity
+                className="max-w-xl text-center text-[1.05rem] leading-8 text-slate-300 md:text-left"
+                lineClassName="about-proximity-line"
+                label={aboutParagraphs.join('\n\n')}
+                baseColor="#cbd5e1"
+                activeColor="#ef4444"
+              />
+            </div>
           </div>
 
           {/* RIGHT */}
@@ -99,11 +129,7 @@ export default function About() {
               <div
                 key={i}
                 className="about-item quality-item"
-                onMouseMove={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  e.currentTarget.style.setProperty('--x', `${e.clientX - rect.left}px`);
-                  e.currentTarget.style.setProperty('--y', `${e.clientY - rect.top}px`);
-                }}
+                onMouseMove={handleHoverMove}
               >
                 <span className="quality-text">{quality}</span>
               </div>

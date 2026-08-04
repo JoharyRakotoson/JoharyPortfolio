@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ProjectCard from '../components/ProjectCard';
 import type { ProjectItem } from '../data/index';
@@ -16,6 +16,8 @@ const AUTO_DURATION = 3500;
 export default function ProjectCarousel({ projects, onSelect }: ProjectCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
   const count = projects.length;
 
   const goTo = useCallback(
@@ -26,15 +28,27 @@ export default function ProjectCarousel({ projects, onSelect }: ProjectCarouselP
   );
 
   useEffect(() => {
-    if (paused) return;
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (paused || !inView) return;
     const id = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % count);
     }, AUTO_DURATION);
     return () => clearInterval(id);
-  }, [paused, count]);
+  }, [paused, count, inView]);
 
   return (
     <div
+      ref={containerRef}
       className="relative mx-auto w-full max-w-5xl px-4"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}

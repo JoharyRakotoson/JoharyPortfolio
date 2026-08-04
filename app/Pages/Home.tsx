@@ -4,10 +4,15 @@ import gsap from 'gsap';
 import { useRef, useContext } from 'react';
 import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import Button from '../components/Button';
-import Antigravity from '../components/effects/Antigravity';
 import SkillsMarquee from '../components/SkillsMarquee';
 import { LangContext } from '../layout';
+
+const Antigravity = dynamic(() => import('../components/effects/Antigravity'), {
+  ssr: false,
+  loading: () => null,
+});
 
 const PARTICLE_CONFIG = {
   count: 100,
@@ -100,7 +105,10 @@ export default function Home() {
             alt="profile"
             width={520}
             height={520}
+            priority
+            sizes="(max-width: 640px) 160px, (max-width: 768px) 208px, (max-width: 1024px) 320px, 520px"
             className="hero-portrait-mask object-contain"
+            style={{ height: 'auto' }}
           />
         </div>
       </div>
