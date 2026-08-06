@@ -6,7 +6,7 @@ import { useRef, useContext } from 'react';
 import { useGSAP } from '@gsap/react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Card from '../components/Card';
-import { LangContext } from '../layout';
+import { LangContext } from '../AppShell';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,6 +82,12 @@ export default function Skills() {
       <h2 id="skills-heading" className="mb-6 text-center text-[2.2rem] font-bold">
         {skillsSection?.title ?? ''}
       </h2>
+
+      <p className="sr-only">
+        Stack technique du développeur fullstack web RAKOTOSON Johariniaina
+        Michael : React, Angular, Node.js, Spring, Tailwind CSS, PostgreSQL,
+        MongoDB, MySQL, Phoenix.
+      </p>
 
       {/* GRID */}
       <div className="mx-auto grid max-w-4xl grid-cols-2 gap-4 lg:grid-cols-4">

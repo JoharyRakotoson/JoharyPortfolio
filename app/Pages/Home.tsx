@@ -7,7 +7,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Button from '../components/Button';
 import SkillsMarquee from '../components/SkillsMarquee';
-import { LangContext } from '../layout';
+import { LangContext } from '../AppShell';
 
 const Antigravity = dynamic(() => import('../components/effects/Antigravity'), {
   ssr: false,
@@ -80,6 +80,12 @@ export default function Home() {
       <div className="pointer-events-none absolute inset-0 z-0">
         <Antigravity {...PARTICLE_CONFIG} />
       </div>
+
+      <p className="sr-only">
+        RAKOTOSON Johariniaina Michael, développeur fullstack web basé à
+        Antananarivo, Madagascar. Conception d&apos;applications web modernes,
+        diplômé d&apos;un Master MBDS de l&apos;IT University.
+      </p>
 
       {/* TITLE */}
       <h1

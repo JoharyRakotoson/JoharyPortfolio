@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useContext } from 'react';
 import Button from '../components/Button';
-import { LangContext } from '../layout';
+import { LangContext } from '../AppShell';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,7 +40,7 @@ export default function Header() {
           <a href="#home" className="flex items-center gap-2 md:gap-3">
             <img
               src="/logo/mylogo.png"
-              alt="Logo"
+              alt="Portfolio RAKOTOSON Johariniaina Michael"
               className="h-7 w-7 object-contain md:h-10 md:w-10"
             />
 

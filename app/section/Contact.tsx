@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import ContactInfo from '../components/ContactInfo';
 import ContactForm from '../components/ContactForm';
-import { LangContext } from '../layout';
+import { LangContext } from '../AppShell';
 
 export default function Contact() {
   const ctx = useContext(LangContext);
@@ -19,6 +19,11 @@ export default function Contact() {
         <h2 className="mb-12 text-center text-4xl font-bold">
           {contactSection?.title ?? ''}
         </h2>
+
+        <p className="sr-only">
+          Contacter RAKOTOSON Johariniaina Michael, développeur fullstack web à
+          Antananarivo, Madagascar. Disponible pour projets et collaborations.
+        </p>
 
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-3">
           <ContactInfo

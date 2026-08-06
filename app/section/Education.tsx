@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { LangContext } from '../layout';
+import { LangContext } from '../AppShell';
 import BlurText from '../components/effects/BlurText';
 import FadeUp from '../components/effects/FadeUp';
 import AnimatedTimelineLine from '../components/effects/AnimatedTimelineLine';
@@ -27,6 +27,12 @@ export default function Education() {
           className="mb-16 text-center text-4xl font-bold text-white"
           stepDuration={0.5}
         />
+
+        <p className="sr-only">
+          Formation de RAKOTOSON Johariniaina Michael : Master 2 MBDS et
+          Licence en développement web à l&apos;IT University Andoharanofotsy,
+          Antananarivo, Madagascar.
+        </p>
 
         {/* TIMELINE */}
         <div className="space-y-8">

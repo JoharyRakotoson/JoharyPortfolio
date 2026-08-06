@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useRef, useContext } from 'react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { LangContext } from '../layout';
+import { LangContext } from '../AppShell';
 import VariableProximity from '../components/effects/VariableProximity';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -104,9 +104,16 @@ export default function About() {
             }}
           >
             {ctx.lang === 'fr'
-              ? 'Développeur web orienté produit et expérience'
+              ? 'Développeur Fullstack Web orienté produit et expérience'
               : 'Product-oriented web developer focused on user experience'}
           </h2>
+
+          <p className="sr-only">
+            RAKOTOSON Johariniaina Michael, développeur fullstack web,
+            titulaire d'un Master MBDS de l'IT University. Création d'applications
+            web modernes avec React, Angular, Node.js, Spring Boot, PostgreSQL
+            et MongoDB.
+          </p>
         </div>
 
         <div className="mt-8 grid grid-cols-1 items-start gap-10 md:grid-cols-2">

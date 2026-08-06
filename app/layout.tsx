@@ -1,37 +1,73 @@
-'use client';
-
 import './globals.css';
-import Header from './layout/Header';
-import Footer from './layout/Footer';
-import * as fr from './data/index';
-import * as en from './data/index.en';
-import { useState, createContext } from 'react';
-import { LangData } from './types';
+import type { Metadata, Viewport } from 'next';
+import AppShell from './AppShell';
+import {
+  siteName,
+  siteTitle,
+  siteDescription,
+  siteKeywords,
+  getSiteUrl,
+} from './lib/site';
 
-type Lang = 'fr' | 'en';
+const siteUrl = getSiteUrl();
 
-type LangContextType = {
-  lang: Lang;
-  setLang: (lang: Lang) => void;
-  data: LangData;
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: siteTitle,
+    template: `%s | ${siteName}`,
+  },
+  description: siteDescription,
+  applicationName: 'Portfolio RAKOTOSON Johariniaina Michael',
+  keywords: siteKeywords,
+  authors: [{ name: siteName, url: siteUrl }],
+  creator: siteName,
+  publisher: siteName,
+  category: 'Portfolio développeur web',
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'fr_FR',
+    url: siteUrl,
+    siteName: 'RAKOTOSON Johariniaina Michael',
+    title: siteTitle,
+    description: siteDescription,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+  },
 };
 
-export const LangContext = createContext<LangContextType | null>(null);
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0f0f0f',
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>('fr');
-
-  const data = lang === 'fr' ? (fr as LangData) : (en as LangData);
-
   return (
-    <LangContext.Provider value={{ lang, setLang, data }}>
-      <html lang={lang}>
-        <body className="min-h-screen bg-[#0F0F0F]">
-          <Header />
-          {children}
-          <Footer />
-        </body>
-      </html>
-    </LangContext.Provider>
+    <html lang="fr">
+      <body className="min-h-screen bg-[#0F0F0F]">
+        <AppShell>{children}</AppShell>
+      </body>
+    </html>
   );
 }

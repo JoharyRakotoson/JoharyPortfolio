@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { LangContext } from '../layout';
+import { LangContext } from '../AppShell';
 import SplitText from '../components/effects/SplitText';
 import FadeUp from '../components/effects/FadeUp';
 import AnimatedUnderline from '../components/effects/AnimatedUnderline';
@@ -34,6 +34,13 @@ export default function Experience() {
             delay={0.08}
             textAlign="center"
           />
+
+          <p className="sr-only">
+            Expérience professionnelle du développeur fullstack web RAKOTOSON
+            Johariniaina Michael : développement IA & web au MEF (Angular,
+            Spring Boot, FastAPI), développement web UI chez Tag-lp (Phoenix,
+            Tailwind CSS) et application web chez Biotrans.
+          </p>
         </div>
 
         {/* CONTENT */}

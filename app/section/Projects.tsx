@@ -4,7 +4,7 @@ import { useContext, useMemo, useState } from 'react';
 
 import ProjectCarousel from './ProjectCarousel';
 import ProjectModal from '../components/ProjectModal';
-import { LangContext } from '../layout';
+import { LangContext } from '../AppShell';
 import type { ProjectItem } from '../data/index';
 
 export default function Projects() {
@@ -19,6 +19,13 @@ export default function Projects() {
       <h2 style={{ textAlign: 'center', fontSize: '2.2rem', marginBottom: '2rem' }}>
         {lang === 'fr' ? 'Projets réalisés' : 'Featured projects'}
       </h2>
+
+      <p className="sr-only">
+        Projets web de RAKOTOSON Johariniaina Michael : applications web
+        fullstack développées pour l&apos;IT University, le MEF, Tag-lp, BioTrans et
+        BioCanada (gestion universitaire, e-commerce Shopify, génération
+        d&apos;interfaces Angular par IA).
+      </p>
 
       <ProjectCarousel projects={projects} onSelect={setSelected} />
 
