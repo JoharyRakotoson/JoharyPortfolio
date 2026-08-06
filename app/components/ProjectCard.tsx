@@ -31,7 +31,7 @@ export default function ProjectCard({
         {/* IMAGE */}
         <Image
           src={image}
-          alt={title}
+          alt={`Aperçu du projet ${title}`}
           fill
           sizes="(max-width: 640px) 180px, (max-width: 768px) 210px, 230px"
           className="object-cover transition-transform duration-700 group-hover:scale-110"

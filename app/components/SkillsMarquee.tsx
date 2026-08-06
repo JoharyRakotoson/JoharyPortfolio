@@ -33,7 +33,7 @@ export default function SkillsMarquee({ skills }: { skills: SkillItem[] }) {
         <div key={`${skill.name}-${i}`} className="flex items-center gap-2 whitespace-nowrap">
           <Image
             src={skill.image}
-            alt={skill.name}
+            alt={`${skill.name} logo`}
             width={32}
             height={32}
             className="h-6 w-6 object-contain brightness-0 invert md:h-8 md:w-8"

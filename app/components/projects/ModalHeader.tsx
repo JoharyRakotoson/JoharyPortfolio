@@ -8,7 +8,7 @@ export default function ModalHeader({ project }: { project: ProjectItem }) {
     <div className="relative h-40 flex-shrink-0 sm:h-48 md:h-auto md:w-[40%] lg:w-[38%]">
       <Image
         src={project.image}
-        alt={project.title}
+        alt={`Aperçu du projet ${project.title}`}
         fill
         sizes="(max-width: 768px) 100vw, 40vw"
         className="object-cover"

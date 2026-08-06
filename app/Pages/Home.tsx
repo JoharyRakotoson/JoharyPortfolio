@@ -108,7 +108,7 @@ export default function Home() {
         <div className="w-40 sm:w-52 md:w-80 lg:w-[520px]">
           <Image
             src="/images/johary3.webp"
-            alt="profile"
+            alt="Portrait de RAKOTOSON Johariniaina Michael, développeur fullstack web"
             width={520}
             height={520}
             priority
