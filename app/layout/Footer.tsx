@@ -43,7 +43,7 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl px-4 py-12 lg:px-6">
         <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-4">
           {/* BRAND */}
-          <div className="flex flex-col">
+          <div className="flex flex-col text-center lg:text-left">
             <p className="text-base font-bold whitespace-nowrap lg:text-xs xl:text-base">
               RAKOTOSON Johariniaina Michael
             </p>
@@ -52,7 +52,7 @@ export default function Footer() {
           </div>
 
           {/* NAVIGATION */}
-          <div className="flex flex-col">
+          <div className="flex flex-col text-center lg:text-left">
             <p className="text-sm font-semibold tracking-[0.25em] text-gray-300 uppercase">
               {labels.navigation}
             </p>
@@ -76,14 +76,14 @@ export default function Footer() {
           </div>
 
           {/* CONTACT */}
-          <div className="flex flex-col">
+          <div className="flex flex-col text-center lg:text-left">
             <p className="text-sm font-semibold tracking-[0.25em] text-gray-300 uppercase">
               {labels.contact}
             </p>
             <ul className="mt-4 space-y-4 text-sm text-gray-400">
               {contactMethods.map((method) => (
                 <li key={method.label}>
-                  <div className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-gray-300 uppercase">
+                  <div className="flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] text-gray-300 uppercase lg:justify-start">
                     {method.icon === 'email' && (
                       <Mail size={14} className="shrink-0 text-red-400" />
                     )}
@@ -121,11 +121,11 @@ export default function Footer() {
           </div>
 
           {/* COMPETENCES + SOCIAL */}
-          <div className="flex flex-col">
+          <div className="flex flex-col text-center lg:text-left">
             <p className="text-sm font-semibold tracking-[0.25em] text-gray-300 uppercase">
               {labels.skills}
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start">
               {skills.map((skill) => (
                 <span
                   key={skill.name}
@@ -139,7 +139,7 @@ export default function Footer() {
             <p className="mt-6 text-sm font-semibold tracking-[0.25em] text-gray-300 uppercase">
               {socialTitle}
             </p>
-            <div className="mt-3 flex gap-3">
+            <div className="mt-3 flex justify-center gap-3 lg:justify-start">
               {socialLink.map((item) => (
                 <a
                   key={item.name}
