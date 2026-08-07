@@ -2,8 +2,8 @@
 
 import { useContext, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import ContactInfo from '../components/ContactInfo';
-import ContactForm from '../components/ContactForm';
+import ContactInfo from '../components/Contact/ContactInfo';
+import ContactForm from '../components/Contact/ContactForm';
 import { LangContext } from '../AppShell';
 
 export default function Contact() {

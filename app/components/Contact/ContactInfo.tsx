@@ -2,9 +2,9 @@
 
 import { Mail, Phone, MapPin } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import Button from './Button';
+import Button from '../ui/Button';
 import ContactItem from './ContactItem';
-import Eyebrow from './Eyebrow';
+import Eyebrow from '../ui/Eyebrow';
 
 const CONTACT_ICONS: Record<string, LucideIcon> = {
   email: Mail,

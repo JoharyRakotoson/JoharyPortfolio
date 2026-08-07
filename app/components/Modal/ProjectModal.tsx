@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import ModalHeader from './projects/ModalHeader';
-import ModalBody from './projects/ModalBody';
-import ModalMeta from './projects/ModalMeta';
-import { projectLabel } from '../lib/projectLabels';
-import type { ProjectItem } from '../data/index';
+import ModalHeader from './ModalHeader';
+import ModalBody from './ModalBody';
+import ModalMeta from './ModalMeta';
+import Button from '../ui/Button';
+import { projectLabel } from '../../lib/projectLabels';
+import type { ProjectItem } from '../../data/index';
 
 type ProjectModalProps = {
   project: ProjectItem | null;
@@ -40,14 +41,15 @@ export default function ProjectModal({ project, lang, onClose }: ProjectModalPro
 
         {/* RIGHT CONTENT */}
         <div className="relative flex min-w-0 flex-1 flex-col md:overflow-hidden">
-          <button
+          <Button
             type="button"
+            variant="icon"
             onClick={onClose}
-            aria-label={projectLabel(lang, 'close')}
-            className="absolute top-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-[#ef4444]"
+            ariaLabel={projectLabel(lang, 'close')}
+            className="absolute top-4 right-4 z-10"
           >
             ✕
-          </button>
+          </Button>
 
           <div className="hidden pr-14 p-5 pb-2 md:block">
             <span className="mb-2 inline-block rounded-full bg-[#ef4444] px-3 py-0.5 text-[10px] font-semibold tracking-wider uppercase">

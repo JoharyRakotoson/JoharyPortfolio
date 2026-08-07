@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import Image from 'next/image';
-import type { SkillItem } from '../data/index';
+import type { SkillItem } from '../../data/index';
 
 export default function SkillsMarquee({ skills }: { skills: SkillItem[] }) {
   const trackRef = useRef<HTMLDivElement>(null);

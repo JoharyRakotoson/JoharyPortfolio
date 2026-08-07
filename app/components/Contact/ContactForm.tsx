@@ -1,8 +1,8 @@
 'use client';
 
-import Button from './Button';
-import FormField from './FormField';
-import { useContactForm, type ContactMessages } from '../lib/useContactForm';
+import Button from '../ui/Button';
+import FormField from '../ui/FormField';
+import { useContactForm, type ContactMessages } from '../../lib/useContactForm';
 
 type ContactFormProps = {
   formTitle: string;

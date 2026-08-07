@@ -3,7 +3,7 @@
 import { useContext, useMemo, useState } from 'react';
 
 import ProjectCarousel from './ProjectCarousel';
-import ProjectModal from '../components/ProjectModal';
+import ProjectModal from '../components/Modal/ProjectModal';
 import { LangContext } from '../AppShell';
 import type { ProjectItem } from '../data/index';
 

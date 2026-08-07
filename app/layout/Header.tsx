@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useContext } from 'react';
-import Button from '../components/Button';
+import Button from '../components/ui/Button';
 import { LangContext } from '../AppShell';
 
 export default function Header() {
@@ -59,13 +59,14 @@ export default function Header() {
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-3 md:gap-4">
             {/* LANGUAGE */}
-            <button
+            <Button
               type="button"
+              variant="lang"
               onClick={() => setLang?.(lang === 'fr' ? 'en' : 'fr')}
-              className="mr-10 text-xs font-medium transition hover:text-gray-300 md:mr-0 md:text-sm"
+              className="mr-10 md:mr-0 md:text-sm"
             >
               {lang.toUpperCase()}
-            </button>
+            </Button>
 
             {/* CONTACT DESKTOP */}
             <div className="hidden md:block">
@@ -78,9 +79,11 @@ export default function Header() {
       </header>
 
       {/* MOBILE BUTTON */}
-      <button
+      <Button
         type="button"
-        className="fixed top-4 right-4 z-2000 flex h-8 w-8 items-center justify-center md:hidden"
+        variant="menu"
+        ariaLabel={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+        className="fixed top-4 right-4 z-2000 md:hidden"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         {menuOpen ? (
@@ -98,7 +101,7 @@ export default function Header() {
             <span className="h-0.5 w-6 bg-white"></span>
           </>
         )}
-      </button>
+      </Button>
 
       {/* MOBILE MENU OVERLAY */}
       <div

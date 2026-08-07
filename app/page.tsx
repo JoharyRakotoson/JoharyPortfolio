@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import Home from './Pages/Home';
+import Home from './section/Home';
 import About from './section/About';
 import Skills from './section/Skills';
 import Projects from './section/Projects';
 import Experience from './section/Experience';
 import Education from './section/Education';
 import Contact from './section/Contact';
-import LazySection from './components/LazySection';
+import LazySection from './components/ui/LazySection';
 import { siteDescription, siteTitle } from './lib/site';
 
 export const metadata: Metadata = {

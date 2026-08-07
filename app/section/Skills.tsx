@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { useRef, useContext } from 'react';
 import { useGSAP } from '@gsap/react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import Card from '../components/Card';
+import Card from '../components/ui/Card';
 import { LangContext } from '../AppShell';
 
 gsap.registerPlugin(ScrollTrigger);

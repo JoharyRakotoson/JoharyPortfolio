@@ -1,7 +1,7 @@
 'use client';
 
-import Icon from './Icon';
-import Eyebrow from './Eyebrow';
+import Icon from '../ui/Icon';
+import Eyebrow from '../ui/Eyebrow';
 import type { LucideIcon } from 'lucide-react';
 
 type ContactItemProps = {

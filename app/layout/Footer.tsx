@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { LangContext } from '../AppShell';
 import GlareSweep from '../components/effects/GlareSweep';
+import Button from '../components/ui/Button';
+import { footerLabel } from '../lib/footerLabels';
 
 export default function Footer() {
   const ctx = useContext(LangContext);
@@ -16,27 +18,6 @@ export default function Footer() {
   const skills = ctx?.data.skills ?? [];
   const year = new Date().getFullYear();
 
-  const labels =
-    lang === 'fr'
-      ? {
-          navigation: 'Navigation',
-          contact: 'Contact',
-          skills: 'Compétences',
-          about: 'Développeur Fullstack Web',
-          tagline: 'Créons ensemble des expériences web mémorables.',
-          rights: 'Tous droits réservés',
-          location: 'Antananarivo, Madagascar',
-        }
-      : {
-          navigation: 'Navigation',
-          contact: 'Contact',
-          skills: 'Skills',
-          about: 'Fullstack Web Developer',
-          tagline: "Let's build memorable web experiences together.",
-          rights: 'All rights reserved',
-          location: 'Antananarivo, Madagascar',
-        };
-
   return (
     <GlareSweep className="w-full">
       <footer className="border-t border-white/10 bg-black/40 text-white">
@@ -47,30 +28,31 @@ export default function Footer() {
             <p className="text-base font-bold whitespace-nowrap lg:text-xs xl:text-base">
               RAKOTOSON Johariniaina Michael
             </p>
-            <p className="mt-1 text-sm font-semibold text-red-400">{labels.about}</p>
-            <p className="mt-3 text-sm leading-relaxed text-gray-400">{labels.tagline}</p>
+            <p className="mt-1 text-sm font-semibold text-red-400">
+              {footerLabel(lang, 'about')}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-gray-400">
+              {footerLabel(lang, 'tagline')}
+            </p>
           </div>
 
           {/* NAVIGATION */}
           <div className="flex flex-col text-center lg:text-left">
             <p className="text-sm font-semibold tracking-[0.25em] text-gray-300 uppercase">
-              {labels.navigation}
+              {footerLabel(lang, 'navigation')}
             </p>
             <ul className="mt-4 space-y-2 text-sm">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="text-gray-400 transition hover:text-red-400"
-                  >
+                  <Button href={item.href} variant="link">
                     {item.label}
-                  </a>
+                  </Button>
                 </li>
               ))}
               <li>
-                <a href="#contact" className="text-gray-400 transition hover:text-red-400">
+                <Button href="#contact" variant="link">
                   {ctx?.data.contactSection?.title}
-                </a>
+                </Button>
               </li>
             </ul>
           </div>
@@ -78,7 +60,7 @@ export default function Footer() {
           {/* CONTACT */}
           <div className="flex flex-col text-center lg:text-left">
             <p className="text-sm font-semibold tracking-[0.25em] text-gray-300 uppercase">
-              {labels.contact}
+              {footerLabel(lang, 'contact')}
             </p>
             <ul className="mt-4 space-y-4 text-sm text-gray-400">
               {contactMethods.map((method) => (
@@ -97,19 +79,21 @@ export default function Footer() {
                   </div>
 
                   {method.icon === 'email' ? (
-                    <a
+                    <Button
                       href={`mailto:${method.value}`}
-                      className="mt-1 block whitespace-nowrap text-sm transition hover:text-red-400 lg:text-xs xl:text-sm"
+                      variant="link"
+                      className="mt-1 block whitespace-nowrap text-sm lg:text-xs xl:text-sm"
                     >
                       {method.value}
-                    </a>
+                    </Button>
                   ) : method.icon === 'phone' ? (
-                    <a
+                    <Button
                       href={`tel:${method.value.replace(/\s/g, '')}`}
-                      className="mt-1 block whitespace-nowrap text-sm transition hover:text-red-400 lg:text-xs xl:text-sm"
+                      variant="link"
+                      className="mt-1 block whitespace-nowrap text-sm lg:text-xs xl:text-sm"
                     >
                       {method.value}
-                    </a>
+                    </Button>
                   ) : (
                     <span className="mt-1 block whitespace-nowrap text-sm lg:text-xs xl:text-sm">
                       {method.value}
@@ -123,7 +107,7 @@ export default function Footer() {
           {/* COMPETENCES + SOCIAL */}
           <div className="flex flex-col text-center lg:text-left">
             <p className="text-sm font-semibold tracking-[0.25em] text-gray-300 uppercase">
-              {labels.skills}
+              {footerLabel(lang, 'skills')}
             </p>
             <div className="mt-4 flex flex-wrap justify-center gap-2 lg:justify-start">
               {skills.map((skill) => (
@@ -141,16 +125,16 @@ export default function Footer() {
             </p>
             <div className="mt-3 flex justify-center gap-3 lg:justify-start">
               {socialLink.map((item) => (
-                <a
+                <Button
                   key={item.name}
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={item.name}
-                  className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500 text-xs font-bold text-white transition hover:bg-red-600"
+                  variant="socialIcon"
+                  ariaLabel={item.name}
                 >
                   {item.icon}
-                </a>
+                </Button>
               ))}
             </div>
           </div>
@@ -159,9 +143,10 @@ export default function Footer() {
         {/* BOTTOM */}
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-gray-500 md:flex-row">
           <p>
-            © {year} RAKOTOSON Johariniaina Michael — {labels.about}. {labels.rights}.
+            © {year} RAKOTOSON Johariniaina Michael — {footerLabel(lang, 'about')}.{' '}
+            {footerLabel(lang, 'rights')}.
           </p>
-          <p>{labels.location}</p>
+          <p>{footerLabel(lang, 'location')}</p>
         </div>
       </div>
       </footer>

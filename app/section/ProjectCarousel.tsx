@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import ProjectCard from '../components/ProjectCard';
+import Button from '../components/ui/Button';
+import ProjectCard from '../components/Project/ProjectCard';
 import type { ProjectItem } from '../data/index';
 
 type ProjectCarouselProps = {
@@ -11,13 +12,14 @@ type ProjectCarouselProps = {
 };
 
 const SPACING = 270;
-const AUTO_DURATION = 3500;
+const SPIN_STEP = 60;
+const SPIN_TOTAL = 1500;
 
 export default function ProjectCarousel({ projects, onSelect }: ProjectCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [inView, setInView] = useState(true);
+  const [spinning, setSpinning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const startedRef = useRef(false);
   const count = projects.length;
 
   const goTo = useCallback(
@@ -31,30 +33,43 @@ export default function ProjectCarousel({ projects, onSelect }: ProjectCarouselP
     const el = containerRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.1 }
+      ([entry]) => {
+        if (entry.isIntersecting && !startedRef.current) {
+          startedRef.current = true;
+          setSpinning(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (paused || !inView) return;
+    if (!spinning) return;
     const id = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % count);
-    }, AUTO_DURATION);
-    return () => clearInterval(id);
-  }, [paused, count, inView]);
+    }, SPIN_STEP);
+    const stop = setTimeout(() => {
+      clearInterval(id);
+      setActiveIndex(0);
+      setSpinning(false);
+    }, SPIN_TOTAL);
+    return () => {
+      clearInterval(id);
+      clearTimeout(stop);
+    };
+  }, [spinning, count]);
 
   return (
-    <div
-      ref={containerRef}
-      className="relative mx-auto w-full max-w-5xl px-4"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div ref={containerRef} className="relative mx-auto w-full max-w-5xl px-4">
       {/* STAGE */}
-      <div className="relative h-[460px] overflow-hidden">
+      <div
+        className={`relative h-[460px] overflow-hidden transition-[filter] duration-300 ${
+          spinning ? 'blur-sm' : ''
+        }`}
+      >
         {projects.map((project, i) => {
           const wrapped = ((i - activeIndex) % count + count) % count;
           const offset = wrapped > count / 2 ? wrapped - count : wrapped;
@@ -68,7 +83,9 @@ export default function ProjectCarousel({ projects, onSelect }: ProjectCarouselP
           return (
             <div
               key={`${project.title}-${i}`}
-              className="absolute top-1/2 left-1/2 transition-all duration-700"
+              className={`absolute top-1/2 left-1/2 transition-all ${
+                spinning ? 'duration-100' : 'duration-700'
+              }`}
               style={{
                 transform: `translate(-50%, -50%) translateX(${offset * SPACING}px) scale(${scale})`,
                 opacity,
@@ -89,22 +106,24 @@ export default function ProjectCarousel({ projects, onSelect }: ProjectCarouselP
       </div>
 
       {/* ARROWS */}
-      <button
+      <Button
         type="button"
-        aria-label="Projet précédent"
+        variant="iconOutline"
+        ariaLabel="Projet précédent"
         onClick={() => goTo(activeIndex - 1)}
-        className="absolute top-1/2 left-0 -translate-y-1/2 rounded-full border border-white/15 bg-black/40 p-3 text-white/80 backdrop-blur-sm transition-colors hover:border-[#ef4444]/60 hover:text-white"
+        className="absolute top-1/2 left-0 -translate-y-1/2"
       >
         <ChevronLeft size={22} />
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
-        aria-label="Projet suivant"
+        variant="iconOutline"
+        ariaLabel="Projet suivant"
         onClick={() => goTo(activeIndex + 1)}
-        className="absolute top-1/2 right-0 -translate-y-1/2 rounded-full border border-white/15 bg-black/40 p-3 text-white/80 backdrop-blur-sm transition-colors hover:border-[#ef4444]/60 hover:text-white"
+        className="absolute top-1/2 right-0 -translate-y-1/2"
       >
         <ChevronRight size={22} />
-      </button>
+      </Button>
     </div>
   );
 }

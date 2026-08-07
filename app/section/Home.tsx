@@ -4,38 +4,11 @@ import gsap from 'gsap';
 import { useRef, useContext, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import Button from '../components/Button';
-import SkillsMarquee from '../components/SkillsMarquee';
+import Button from '../components/ui/Button';
+import SkillsMarquee from '../components/Hero/SkillsMarquee';
+import HeroBackground from '../components/Hero/HeroBackground';
+import { Z_TITLE, Z_PORTRAIT, Z_INFO, Z_STACK } from '../lib/heroConfig';
 import { LangContext } from '../AppShell';
-
-const Antigravity = dynamic(() => import('../components/effects/Antigravity'), {
-  ssr: false,
-  loading: () => null,
-});
-
-const PARTICLE_CONFIG = {
-  count: 100,
-  magnetRadius: 5,
-  ringRadius: 5,
-  waveSpeed: 0.4,
-  waveAmplitude: 1,
-  particleSize: 1.5,
-  lerpSpeed: 0.05,
-  color: '#ef4444',
-  autoAnimate: false,
-  particleVariance: 1,
-  rotationSpeed: 0.7,
-  depthFactor: 1,
-  pulseSpeed: 3,
-  particleShape: 'capsule',
-  fieldStrength: 10,
-} as const;
-
-const Z_TITLE = 'z-10';
-const Z_PORTRAIT = 'z-20';
-const Z_INFO = 'z-30';
-const Z_STACK = 'z-40';
 
 export default function Home() {
   const scope = useRef<HTMLElement>(null);
@@ -92,7 +65,7 @@ export default function Home() {
     >
       {/* BACKGROUND */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        {heroVisible && <Antigravity {...PARTICLE_CONFIG} />}
+        {heroVisible && <HeroBackground />}
       </div>
 
       <p className="sr-only">
@@ -144,9 +117,9 @@ export default function Home() {
 
         {/* BUTTONS */}
         <div className="flex w-full flex-col items-center gap-3 sm:flex-row md:w-auto md:gap-4">
-          <a href="/cv.pdf" download>
-            <Button variant="primary">{home?.cvLabel ?? ''}</Button>
-          </a>
+          <Button href="/cv.pdf" download variant="primary">
+            {home?.cvLabel ?? ''}
+          </Button>
 
           <Button href="#projects" variant="secondary">
             {home?.projectsLabel ?? ''}
