@@ -6,6 +6,7 @@ import Projects from './section/Projects';
 import Experience from './section/Experience';
 import Education from './section/Education';
 import Contact from './section/Contact';
+import LazySection from './components/LazySection';
 import { siteDescription, siteTitle } from './lib/site';
 
 export const metadata: Metadata = {
@@ -17,12 +18,24 @@ export default function Page() {
   return (
     <>
       <Home />
-      <About />
-      <Skills />
-      <Projects />
-      <Education />
-      <Experience />
-      <Contact />
+      <LazySection id="about">
+        <About />
+      </LazySection>
+      <LazySection id="skills">
+        <Skills />
+      </LazySection>
+      <LazySection id="projects">
+        <Projects />
+      </LazySection>
+      <LazySection id="education">
+        <Education />
+      </LazySection>
+      <LazySection id="experience">
+        <Experience />
+      </LazySection>
+      <LazySection id="contact">
+        <Contact />
+      </LazySection>
     </>
   );
 }

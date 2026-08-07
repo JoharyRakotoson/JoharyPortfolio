@@ -1,7 +1,7 @@
 'use client';
 
 import gsap from 'gsap';
-import { useRef, useContext } from 'react';
+import { useRef, useContext, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -39,10 +39,24 @@ const Z_STACK = 'z-40';
 
 export default function Home() {
   const scope = useRef<HTMLElement>(null);
+  const [heroVisible, setHeroVisible] = useState(true);
 
   const ctx = useContext(LangContext);
   const home = ctx?.data.home;
   const skills = ctx?.data.skills ?? [];
+
+  useEffect(() => {
+    const el = scope.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { rootMargin: '400px 0px' }
+    );
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
 
   useGSAP(
     () => {
@@ -78,7 +92,7 @@ export default function Home() {
     >
       {/* BACKGROUND */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <Antigravity {...PARTICLE_CONFIG} />
+        {heroVisible && <Antigravity {...PARTICLE_CONFIG} />}
       </div>
 
       <p className="sr-only">
@@ -142,7 +156,7 @@ export default function Home() {
 
       {/* STACK */}
       <div className={`absolute bottom-0 left-0 ${Z_STACK} w-full`}>
-        <SkillsMarquee skills={skills} />
+        {heroVisible && <SkillsMarquee skills={skills} />}
       </div>
     </section>
   );

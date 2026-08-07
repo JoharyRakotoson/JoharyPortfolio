@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable react-hooks/purity */
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
 interface AntigravityProps {
@@ -46,6 +46,14 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
   const lastMousePos = useRef({ x: 0, y: 0 });
   const lastMouseMoveTime = useRef(0);
   const virtualMouse = useRef({ x: 0, y: 0 });
+  const timerRef = useRef<THREE.Timer | null>(null);
+
+  useEffect(() => {
+    return () => {
+      timerRef.current?.dispose();
+      timerRef.current = null;
+    };
+  }, []);
 
   const particles = useMemo(() => {
     const temp = [];
@@ -94,6 +102,10 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
 
     const { viewport: v, pointer: m } = state;
 
+    const timer = timerRef.current ?? new THREE.Timer();
+    timerRef.current = timer;
+    timer.update();
+
     const mouseDist = Math.sqrt(
       Math.pow(m.x - lastMousePos.current.x, 2) + Math.pow(m.y - lastMousePos.current.y, 2)
     );
@@ -107,7 +119,7 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
     let destY = (m.y * v.height) / 2;
 
     if (autoAnimate && Date.now() - lastMouseMoveTime.current > 2000) {
-      const time = state.clock.getElapsedTime();
+      const time = timer.getElapsed();
       destX = Math.sin(time * 0.5) * (v.width / 4);
       destY = Math.cos(time * 0.5 * 2) * (v.height / 4);
     }
@@ -119,7 +131,7 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
     const targetX = virtualMouse.current.x;
     const targetY = virtualMouse.current.y;
 
-    const globalRotation = state.clock.getElapsedTime() * rotationSpeed;
+    const globalRotation = timer.getElapsed() * rotationSpeed;
 
     particles.forEach((particle, i) => {
       let { t, speed, mx, my, mz, cz, randomRadiusOffset } = particle;

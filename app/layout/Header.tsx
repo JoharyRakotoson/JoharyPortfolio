@@ -39,7 +39,7 @@ export default function Header() {
           {/* LOGO */}
           <a href="#home" className="flex items-center gap-2 md:gap-3">
             <img
-              src="/logo/mylogo.png"
+              src="/logo/mylogo.webp"
               alt="Portfolio RAKOTOSON Johariniaina Michael"
               className="h-7 w-7 object-contain md:h-10 md:w-10"
             />
