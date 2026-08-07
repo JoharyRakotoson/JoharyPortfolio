@@ -27,7 +27,7 @@ type ContactInfoProps = {
 
 export default function ContactInfo({ contactMethods, socialTitle, socialLink }: ContactInfoProps) {
   return (
-    <div className="lg:col-span-2">
+    <div>
       <div className="overflow-hidden rounded-3xl p-4 shadow-2xl shadow-gray-300/10 sm:p-6 lg:p-10">
         <div className="space-y-6">
           {contactMethods.map((method) => (

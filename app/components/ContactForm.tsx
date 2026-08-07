@@ -28,7 +28,7 @@ export default function ContactForm({ formTitle, submitLabel, fields, messages }
   const { handleSubmit } = useContactForm(messages ?? FALLBACK_MESSAGES);
 
   return (
-    <div className="flex justify-center lg:col-span-1">
+    <div className="flex justify-center">
       <div className="flex w-full max-w-xl flex-col items-center rounded-3xl border border-gray-800/60 bg-transparent p-10">
         <h3 className="mb-8 w-full text-3xl font-semibold">{formTitle}</h3>
 
