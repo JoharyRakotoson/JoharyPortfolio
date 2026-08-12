@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     template: `%s | ${siteName}`,
   },
   description: siteDescription,
+  verification: {
+    google: 'uaz4MFmmDFHYb16KuKSvlRc-Qjh5Y2CU_hffIe_ha8w',
+  },
   applicationName: 'Portfolio RAKOTOSON Johariniaina Michael',
   keywords: siteKeywords,
   authors: [{ name: siteName, url: siteUrl }],
